@@ -1,12 +1,26 @@
-import { reactive } from "vue";
+import { reactive } from 'vue';
 
-const state = reactive({
-  token: "",
-  nickname: "",
-  description: "",
-  profilePicturePath: "",
-  message: "",
-});
+let state;
+const user = localStorage.getItem('user');
+
+if (!user) {
+  state = reactive({
+    token: '',
+    nickname: '',
+    description: '',
+    profilePicturePath: '',
+    message: '',
+  });
+} else {
+  const session = JSON.parse(user);
+  state = reactive({
+    token: session.token,
+    nickname: session.nickname,
+    description: session.description,
+    profilePicturePath: session.profile_picture_path,
+    message: '',
+  });
+}
 
 const methods = {
   updateUser(token, nickname, description, profilePicturePath) {
