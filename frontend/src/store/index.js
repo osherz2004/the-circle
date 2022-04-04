@@ -1,10 +1,11 @@
-import { reactive } from 'vue';
+import { reactive } from "vue";
 
 const state = reactive({
   token: "",
   nickname: "",
   description: "",
   profilePicturePath: "",
+  message: "",
 });
 
 const methods = {
@@ -13,7 +14,7 @@ const methods = {
     state.nickname = nickname;
     state.description = description;
     state.profilePicturePath = profilePicturePath;
-  }
-}
+  },
+};
 
-export default { state, methods }
+export default { state, methods };

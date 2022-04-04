@@ -1,6 +1,6 @@
 <template>
   <div class="h-screen w-1/2 mx-auto flex flex-col justify-center">
-    <Notification :message="message" />
+    <Notification />
     <h1 class="text-4xl font-bold uppercase">Create Your Player!</h1>
     <hr class="border-2 border-indigo-500 bg-indigo-500 my-4" />
     <form @submit="handleSubmit">
@@ -128,7 +128,7 @@
 </template>
 
 <script>
-import { ref } from "vue";
+import { ref, inject } from "vue";
 import AuthService from "../services/auth";
 import { useRouter } from "vue-router";
 import Notification from "@/components/Notification.vue";
@@ -136,11 +136,12 @@ import Notification from "@/components/Notification.vue";
 export default {
   components: { Notification },
   setup() {
+    const store = inject("store");
+
     const nickname = ref("");
     const description = ref("");
     const password = ref("");
     const profilePicture = ref(null);
-    const message = ref("");
 
     const router = useRouter();
 
@@ -160,12 +161,12 @@ export default {
         profilePicture.value
       );
 
+      store.state.message = result.message;
+
       if (result.success) {
         router.push("/login");
         return;
       }
-
-      message.value = result.message;
     };
 
     return {
@@ -175,11 +176,9 @@ export default {
       profilePicture,
       handleImageSelect,
       handleSubmit,
-      message,
     };
   },
 };
 </script>
 
-<style>
-</style>
+<style></style>

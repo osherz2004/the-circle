@@ -82,11 +82,11 @@ class Login(Resource):
 
         # Check if user exists
         if not user:
-            return {"message": "Wrong credentials."}
+            return {"message": "Wrong credentials."}, 403
 
         # Check if password is currect
         if not bcrypt.check_password_hash(user.password_hash, password):
-            return {"message": "Wrong credentials."}
+            return {"message": "Wrong credentials."}, 403
 
         # Sign JWT
         token = create_access_token(user.nickname, "1d")

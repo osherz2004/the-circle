@@ -1,7 +1,7 @@
 <template>
   <div
     class="fixed top-0 left-0 w-full px-96"
-    v-if="message1.length > 0 && isDisplayed"
+    v-if="store.state.message.length > 0"
   >
     <div
       class="
@@ -14,7 +14,7 @@
         items-center
       "
     >
-      <p class="uppercase text-gray-700">{{ message1 }}</p>
+      <p class="uppercase text-gray-700">{{ store.state.message }}</p>
       <i
         @click="handleClose"
         class="bi bi-x text-black text-3xl cursor-pointer"
@@ -24,22 +24,17 @@
 </template>
 
 <script>
-import { ref, computed } from "vue";
+import { inject } from "vue";
 
 export default {
-  props: ["message"],
-  setup(props) {
-    const isDisplayed = ref(true);
-    const message1 = computed(() => {
-      console.log(props.message);
-      return props.message;
-    });
+  setup() {
+    const store = inject("store");
 
     const handleClose = () => {
-      isDisplayed.value = false;
+      store.state.message = "";
     };
 
-    return { isDisplayed, handleClose, message1 };
+    return { handleClose, store };
   },
 };
 </script>

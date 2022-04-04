@@ -1,5 +1,6 @@
 <template>
   <div class="h-screen w-1/2 mx-auto flex flex-col justify-center">
+    <Notification />
     <h1 class="text-4xl font-bold uppercase">Login and Play!</h1>
     <hr class="border-2 border-indigo-500 bg-indigo-500 my-4" />
     <form @submit="handleLogin">
@@ -76,8 +77,11 @@
 <script>
 import { ref, inject } from "vue";
 import { useRouter } from "vue-router";
+import AuthService from "../services/auth";
+import Notification from "../components/Notification.vue";
 
 export default {
+  components: { Notification },
   setup() {
     const store = inject("store");
 
@@ -89,21 +93,17 @@ export default {
     const handleLogin = async (e) => {
       e.preventDefault();
 
-      const body = { nickname: nickname.value, password: password.value };
+      const result = await AuthService.login(nickname.value, password.value);
 
-      const response = await fetch("http://localhost:5000/api/login", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(body),
-      });
+      if (!result.success) {
+        store.state.message = result.message;
+        return;
+      }
 
-      const data = await response.json();
-
-      store.state.token = data.token;
-      store.state.nickname = data.nickname;
-      store.state.description = data.description;
-      store.state.profilePicturePath =
-        "http://localhost:5000" + data.profile_picture_path;
+      store.state.token = result.data.token;
+      store.state.nickname = result.data.nickname;
+      store.state.description = result.data.description;
+      store.state.profilePicturePath = result.data.profile_picture_path;
 
       router.push("/");
     };
