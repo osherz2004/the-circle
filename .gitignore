@@ -1,0 +1,6 @@
+.flaskenv
+__pycache__/
+api.rest
+database.db
+node_modules/
+venv/
