@@ -1,4 +1,5 @@
 import { reactive } from 'vue';
+import GameService from '../services/game';
 
 let state;
 const user = localStorage.getItem('user');
@@ -10,6 +11,7 @@ if (!user) {
     description: '',
     profilePicturePath: '',
     message: '',
+    socket: null,
   });
 } else {
   const session = JSON.parse(user);
@@ -19,6 +21,7 @@ if (!user) {
     description: session.description,
     profilePicturePath: session.profile_picture_path,
     message: '',
+    socket: GameService.connect(session.token),
   });
 }
 

@@ -79,6 +79,7 @@ import { ref, inject } from "vue";
 import { useRouter } from "vue-router";
 import AuthService from "../services/auth";
 import Notification from "../components/Notification.vue";
+import GameService from "../services/game";
 
 export default {
   components: { Notification },
@@ -104,8 +105,9 @@ export default {
       store.state.nickname = result.data.nickname;
       store.state.description = result.data.description;
       store.state.profilePicturePath = result.data.profile_picture_path;
+      store.state.socket = GameService.connect(result.data.token);
 
-      router.push("/");
+      router.push("/waiting-screen");
     };
 
     return {

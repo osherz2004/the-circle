@@ -10,6 +10,14 @@ const routes = [
     },
   },
   {
+    path: '/waiting-screen',
+    name: 'WaitingScreen',
+    component: () => import('../views/WaitingScreen.vue'),
+    meta: {
+      requiresAuth: true,
+    },
+  },
+  {
     path: '/about',
     name: 'About',
     component: () => import('../views/About.vue'),
