@@ -18,6 +18,14 @@ const routes = [
     },
   },
   {
+    path: '/players',
+    name: 'Players',
+    component: () => import('../views/Players.vue'),
+    meta: {
+      requiresAuth: true,
+    },
+  },
+  {
     path: '/about',
     name: 'About',
     component: () => import('../views/About.vue'),

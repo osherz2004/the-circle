@@ -1,7 +1,7 @@
 from flask_restful import Resource
 from flask import request
 from flask_jwt_extended import create_access_token
-from app import db, app, bcrypt
+from app import db, app, bcrypt, game
 from app.models import User
 from werkzeug.utils import secure_filename
 from werkzeug.exceptions import RequestEntityTooLarge
@@ -23,7 +23,18 @@ def get_uploaded_file_path(filename):
 
 class Users(Resource):
     def get(self):
-        return {"greet": "Hello World!"}
+        users = User.query.filter(User.nickname.in_(game.get_players())).all()
+
+        def map_users(user):
+            return {
+                "id": user.id,
+                "nickname": user.nickname,
+                "description": user.description,
+                "profile_picture_path": user.profile_picture_path,
+            }
+
+        mapped_users = list(map(map_users, users))
+        return mapped_users
 
     def post(self):
         # Get fields from user request
