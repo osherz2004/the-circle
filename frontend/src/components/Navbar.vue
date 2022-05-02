@@ -7,18 +7,13 @@
         ></router-link>
       </li>
       <li>
-        <router-link to="/" class="text-white"
+        <router-link to="/players" class="text-white"
           ><i class="bi bi-people-fill text-3xl hover:text-gray-300"></i
         ></router-link>
       </li>
       <li>
-        <router-link to="/" class="text-white"
+        <router-link to="/chat" class="text-white"
           ><i class="bi bi-chat-left-text-fill text-3xl hover:text-gray-300"></i
-        ></router-link>
-      </li>
-      <li>
-        <router-link to="/" class="text-white"
-          ><i class="bi bi-dice-6-fill text-3xl hover:text-gray-300"></i
         ></router-link>
       </li>
       <li>

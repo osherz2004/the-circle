@@ -1,4 +1,5 @@
 from flask_socketio import emit
+import asyncio
 
 
 class Player:
@@ -11,11 +12,13 @@ class Player:
 
 
 class Game:
-    MAX_PLAYERS = 2
+    MAX_PLAYERS = 1
 
     def __init__(self):
         self.players = []
         self.running = False
+        self.chat_open = False
+        self.chat_messages = []
 
     def user_exists(self, nickname):
         for user in self.players:
@@ -46,5 +49,10 @@ class Game:
             players.append(p.nickname)
         return players
 
+    def open_chat(self):
+        self.chat_open = True
+        emit("game:message", {"message": "Chat rooms are now open."}, broadcast=True)
+
     def start_game(self):
         emit("game:start", broadcast=True)
+        self.open_chat()

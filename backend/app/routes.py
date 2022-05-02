@@ -39,3 +39,39 @@ def handle_get_game_status():
         },
         broadcast=True,
     )
+
+
+@socketio.on("chat:get")
+@jwt_required()
+def handle_get_chat_messages():
+    if not game.chat_open:
+        emit(
+            "chat:recive",
+            [
+                {
+                    "id": 1,
+                    "message": "Chat is closed.",
+                    "profile_picture_path": "https://play-lh.googleusercontent.com/ve6ZSaZ3XmNUfusBs4sVKKOvPpJJRETo76_n9W4L3cWt5j09F-M_mobKdvjv2a1-2y0",
+                    "player": "Game",
+                }
+            ],
+            broadcast=True,
+        )
+    else:
+        emit(
+            "chat:recive",
+            game.chat_messages,
+            broadcast=True,
+        )
+
+
+@socketio.on("chat:send")
+@jwt_required()
+def handle_get_chat_messages(message):
+    message["id"] = len(game.chat_messages)
+    game.chat_messages.append(message)
+    emit(
+        "chat:recive",
+        game.chat_messages,
+        broadcast=True,
+    )

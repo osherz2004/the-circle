@@ -38,6 +38,10 @@ export default {
   setup() {
     const store = inject("store");
 
+    store.state.socket.on("game:message", (data) => {
+      store.state.message = data.message;
+    });
+
     return { store };
   },
 };
