@@ -8,11 +8,13 @@ from werkzeug.exceptions import RequestEntityTooLarge
 import os
 
 
+# The function recives a filename (string) and return if it is an image
 def valid_picture_filename(filename):
     allowed_extensions = (".jpg", ".jpeg", ".png")
     return os.path.splitext(filename)[-1] in allowed_extensions
 
 
+# The function recives a filename (string) and returns the path for the file that will be saved (string)
 def get_uploaded_file_path(filename):
     return os.path.join(
         "app/",
@@ -22,6 +24,7 @@ def get_uploaded_file_path(filename):
 
 
 class Users(Resource):
+    # The function returns a list of the users in the game.
     def get(self):
         users = User.query.filter(User.nickname.in_(game.get_players())).all()
 
@@ -36,6 +39,7 @@ class Users(Resource):
         mapped_users = list(map(map_users, users))
         return mapped_users
 
+    # The function creates a new user (when requests to POST /api/users are sent).
     def post(self):
         # Get fields from user request
         nickname = request.form.get("nickname")
@@ -82,6 +86,7 @@ class Users(Resource):
 
 
 class Login(Resource):
+    # The function logs in users to the game (POST /api/login)
     def post(self):
         # Get fields from user request
         data = request.get_json()

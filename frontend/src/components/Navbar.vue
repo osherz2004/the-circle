@@ -17,7 +17,7 @@
         ></router-link>
       </li>
       <li>
-        <router-link to="/" class="text-white"
+        <router-link to="/votes" class="text-white"
           ><i class="bi bi-file-bar-graph-fill text-3xl hover:text-gray-300"></i
         ></router-link>
       </li>

@@ -75,3 +75,10 @@ def handle_get_chat_messages(message):
         game.chat_messages,
         broadcast=True,
     )
+
+
+@socketio.on("vote")
+@jwt_required()
+def handle_vote(vote):
+    nickname = get_jwt_identity()
+    game.vote(vote, nickname)

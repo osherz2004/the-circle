@@ -18,6 +18,11 @@ const routes = [
     },
   },
   {
+    path: '/winner',
+    name: 'Winner',
+    component: () => import('../views/Winner.vue'),
+  },
+  {
     path: '/players',
     name: 'Players',
     component: () => import('../views/Players.vue'),
@@ -29,6 +34,17 @@ const routes = [
     path: '/chat',
     name: 'Chat',
     component: () => import('../views/Chat.vue'),
+    meta: {
+      requiresAuth: true,
+    },
+  },
+  {
+    path: '/votes',
+    name: 'Votes',
+    component: () => import('../views/Votes.vue'),
+    meta: {
+      requiresAuth: true,
+    },
   },
   {
     path: '/about',

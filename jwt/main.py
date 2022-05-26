@@ -40,8 +40,8 @@ class jwt:
     def validate_token(token, public_key):
         signiture = b64.decode_bytes(token.split(".")[2].encode())
         try:
-            rsa.decrypt(signiture, public_key)
-            return True
+            if b64.decode(token.split(".")[1]) == rsa.decrypt(signiture, public_key):
+                return True
         except Exception:
             return False
 
